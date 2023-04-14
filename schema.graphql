@@ -1,0 +1,52 @@
+type Person {
+  id: ID!
+  name: String!
+  surname: String!
+  age: Int
+  gender: Gender
+  birthday: Date
+  phone: String
+  email: String!
+  contacts: [Person]
+  created: Date!
+  modified: Date!
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+scalar Date
+
+type Query {
+  getPerson(id: ID!): Person
+  getAllPeople(page: Int!, pageSize: Int!, sortBy: String): [Person]!
+}
+
+type Mutation {
+  createPerson(
+    name: String!,
+    surname: String!,
+    age: Int,
+    gender: Gender,
+    birthday: Date,
+    phone: String,
+    email: String!,
+    contacts: [ID]
+  ): Person!
+
+  updatePerson(
+    id: ID!,
+    name: String,
+    surname: String,
+    age: Int,
+    gender: Gender,
+    birthday: Date,
+    phone: String,
+    email: String,
+    contacts: [ID]
+  ): Person!
+
+  deletePerson(id: ID!): Boolean!
+}
