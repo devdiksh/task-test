@@ -25,6 +25,11 @@ const config = convict({
     default: 4000,
     env: 'PORT'
   },
+  log_level: {
+    doc: 'level of logs to show',
+    format: String,
+    default: 'debug'
+  },
   webApp: {
     baseUrl: {
       default: '',
