@@ -1,10 +1,12 @@
-const fastify = require("fastify")({ logger: false });
-const cors = require("@fastify/cors");
-const pagination = require("fastify-pagination");
-const swagger = require("@fastify/swagger");
-const config = require("./config/app")
+import Fastify from "fastify"
+import cors from "@fastify/cors"
+import pagination from "fastify-pagination"
+import swagger from "@fastify/swagger"
+import config from "./config/app"
+import db from "./models/index"
+import PersonRoutes from './routes/persons'
 
-const { sequelize } = require("./models/index");
+const fastify = Fastify({logger: true})
 const PORT = config.get('port')
 
 fastify.register(cors, { origin: "*" });
@@ -18,13 +20,13 @@ fastify.register(swagger, {
   },
 });
 
-fastify.register(require("./routes/persons"), {
+fastify.register(PersonRoutes, {
   prefix: 'api/v1/person'
 });
 
 const start = async () => {
   try {
-    await sequelize.sync({ force: config.get('sequelize.sync') });
+    await db.sequelize.sync({ force: config.get('sequelize.sync') });
     await fastify.listen({
       port: PORT
     })

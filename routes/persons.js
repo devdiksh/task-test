@@ -1,4 +1,4 @@
-const { Person } = require("../models");
+import { Person } from "../models"
 
 const routes = async (fastify, options) => {
   // Get List of People
@@ -95,4 +95,4 @@ const routes = async (fastify, options) => {
   });
 };
 
-module.exports = routes;
+export default routes;

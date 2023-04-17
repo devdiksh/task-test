@@ -1,11 +1,12 @@
-const { readdirSync } = require("fs");
-const { basename: _basename} = require("path");
-const { Sequelize } = require("sequelize");
-const path = require("path");
+import { readdirSync } from "fs"
+import { basename as _basename } from "path"
+import { Sequelize } from "sequelize"
+import dbconfig from '../config/db'
+import path from "path"
 
 const basename = _basename(__filename);
 const env = process.env.NODE_ENV || "development";
-const config = require("../config/db")[env];
+const config = dbconfig[env];
 const db = {};
 
 let sequelize = new Sequelize(
@@ -34,4 +35,4 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-module.exports = db;
+export default db

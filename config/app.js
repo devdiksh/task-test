@@ -1,8 +1,9 @@
-const convict = require('convict')
-const { resolve } = require('path')
+import convict from 'convict'
+import { resolve } from 'path'
+import dotenv from 'dotenv'
 
 // Update path for dotenv file
-require('dotenv').config({ path: resolve(__dirname, '../.env') })
+dotenv.config({ path: resolve(__dirname, '../.env') })
 
 const config = convict({
   app: {
@@ -60,4 +61,4 @@ const config = convict({
 
 config.validate({ allowed: 'strict' })
 
-module.exports = config
+export default config

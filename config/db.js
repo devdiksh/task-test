@@ -1,6 +1,6 @@
-const config = require('./app')
+import config from './app'
 
-module.exports = {
+export default {
   development: {
     username: config.get('sequelize.user'),
     password: config.get('sequelize.password'),
