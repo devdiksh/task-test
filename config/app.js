@@ -56,7 +56,7 @@ const config = convict({
       default: false,
       env: 'DB_SYNC'
     }
-  },
+  }
 })
 
 config.validate({ allowed: 'strict' })

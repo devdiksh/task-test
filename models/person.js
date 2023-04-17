@@ -1,21 +1,21 @@
-module.exports =  (sequelize, DataTypes) => {
+module.exports = (sequelize, DataTypes) => {
   const Person = sequelize.define('Person', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
     },
     name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     surname: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     age: DataTypes.INTEGER,
     gender: {
-      type: DataTypes.ENUM("male", "female"),
+      type: DataTypes.ENUM('male', 'female')
     },
     birthday: DataTypes.DATEONLY,
     phone: DataTypes.STRING,
@@ -24,17 +24,17 @@ module.exports =  (sequelize, DataTypes) => {
       allowNull: false,
       unique: true,
       validate: {
-        isEmail: true,
-      },
-    },
+        isEmail: true
+      }
+    }
   })
 
   Person.associate = function (models) {
     Person.belongsToMany(models.Person, {
-      as: "contacts",
-      through: "PersonContacts",
-      foreignKey: "personId",
-    });
+      as: 'contacts',
+      through: 'PersonContacts',
+      foreignKey: 'personId'
+    })
   }
 
   return Person

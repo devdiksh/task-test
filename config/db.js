@@ -15,5 +15,5 @@ export default {
     },
     underscored: true,
     underscoredAll: true
-  },
+  }
 }

@@ -1,47 +1,50 @@
-const resolvers = {
+import db from './models'
+
+const { Person } = db
+export const resolvers = {
   Query: {
-    async getPerson(_, { id }) {
+    async getPerson (_, { id }) {
       const person = await Person.findByPk(id, {
-        include: [{ model: Person, as: "contacts" }],
-      });
-      return person;
+        include: [{ model: Person, as: 'contacts' }]
+      })
+      return person
     },
 
-    async getAllPeople(_, { page = 1, pageSize = 10, sortBy = "email" }) {
-      const offset = (page - 1) * pageSize;
+    async getAllPeople (_, { page = 1, pageSize = 10, sortBy = 'email' }) {
+      const offset = (page - 1) * pageSize
       const people = await Person.findAll({
         limit: pageSize,
         offset,
-        order: [[sortBy, "ASC"]],
-      });
-      return people;
-    },
+        order: [[sortBy, 'ASC']]
+      })
+      return people
+    }
   },
 
   Mutation: {
-    async createPerson(_, args) {
-      const person = await Person.create(args);
+    async createPerson (_, args) {
+      const person = await Person.create(args)
       if (args.contacts) {
-        const contacts = await Person.findAll({ where: { id: args.contacts } });
-        await person.setContacts(contacts);
+        const contacts = await Person.findAll({ where: { id: args.contacts } })
+        await person.setContacts(contacts)
       }
-      return person;
+      return person
     },
 
-    async updatePerson(_, { id, ...args }) {
-      const person = await Person.findByPk(id);
-      if (!person) throw new Error("Person not found");
-      await person.update(args);
+    async updatePerson (_, { id, ...args }) {
+      const person = await Person.findByPk(id)
+      if (!person) throw new Error('Person not found')
+      await person.update(args)
       if (args.contacts) {
-        const contacts = await Person.findAll({ where: { id: args.contacts } });
-        await person.setContacts(contacts);
+        const contacts = await Person.findAll({ where: { id: args.contacts } })
+        await person.setContacts(contacts)
       }
-      return person;
+      return person
     },
 
-    async deletePerson(_, { id }) {
-      const result = await Person.destroy({ where: { id } });
-      return result === 1;
-    },
-  },
-};
+    async deletePerson (_, { id }) {
+      const result = await Person.destroy({ where: { id } })
+      return result === 1
+    }
+  }
+}
