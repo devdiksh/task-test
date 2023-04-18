@@ -82,7 +82,6 @@ export default class ServiceBase {
       fault: this.errors
     })
 
-    // overwriting the previous error if error is already set
     if (!_.isEmpty(this._errors)) {
       this._errors = {
         [attribute]: errorMessage
@@ -117,70 +116,60 @@ export default class ServiceBase {
     const validationErrors = validate(this._args, this.constraints)
     const errors = {}
     _.forEach(validationErrors, (error) => {
-      errors[ERRORS.BAD_DATA] = error[0]
+      errors[ERRORS.BAD_DATA] = {
+        code: 'validation',
+        message: error[0],
+        detail: error
+      }
     })
 
     if (_.size(errors)) {
       _.extend(this.errors, { ...errors })
       Log.debug('Service input Validation Failed', {
         klass: this.constructor,
-        message: 'Validation Failed',
-        context: this.args,
-        userCtx: this.context,
-        fault: this.errors
+        message: JSON.stringify(errors)
       })
     }
-  }
-
-  static getUserData (arg) {
-    let userData
-    if (arg && arg.length && arg[0].user_id && !_.isEmpty(arg[0].user && arg[0].user.user_name)) {
-      // Select only necessary fields
-      const fields = ['user_id', 'user_name', 'user']
-      userData = JSON.stringify(_.pick(arg[0].user, arg[0].user.user_name, fields))
-    }
-    return userData
   }
 
   // Static methods
   static async run () {
     const args = arguments
-    const user = ServiceBase.getUserData(args)
     Log.info(this.name, {
       context: this.args,
       userCtx: this.context,
-      wrap: 'start',
-      extraData: user
+      wrap: 'start'
     })
+
     const instance = new this(...args)
     await instance.tryExecuting()
     if (_.size(instance.errors)) throw instance.errors
     Log.info(this.name, {
       context: this.args,
       userCtx: this.context,
-      wrap: 'end',
-      extraData: user
+      wrap: 'end'
     })
+
     return instance.result
   }
 
   static async execute () {
     const args = arguments
-    const user = ServiceBase.getUserData(args)
     Log.info(this.name, {
       context: this.args,
       userCtx: this.context,
-      wrap: 'start',
-      extraData: user
+      wrap: 'start'
     })
+
     const instance = new this(...args)
     await instance.tryExecuting()
+
     Log.info(this.name, {
       context: this.args,
       userCtx: this.context,
-      wrap: 'end',
-      extraData: user
+      wrap: 'end'
     })
+
     return instance
   }
 }

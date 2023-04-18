@@ -1,17 +1,22 @@
 import Fastify from 'fastify'
+import mercurius from 'mercurius'
 import cors from '@fastify/cors'
 import pagination from 'fastify-pagination'
 import swagger from '@fastify/swagger'
 import config from './config/app'
 import db from './models/index'
-import PersonRoutes from './routes/persons'
 
-const fastify = Fastify({ logger: true })
+import { peopleSchema } from './graphql/schema.people'
+import { peopleResolvers } from './graphql/resolver.people'
+import { Routes } from './routes'
+
+const fastify = Fastify({ logger: false })
 const PORT = config.get('port')
 
 fastify.register(cors, { origin: '*' })
 fastify.register(pagination)
 
+// Register Swagger
 fastify.register(swagger, {
   exposeRoute: true,
   routePrefix: '/documentation',
@@ -20,8 +25,14 @@ fastify.register(swagger, {
   }
 })
 
-fastify.register(PersonRoutes, {
-  prefix: 'api/v1/person'
+// Register Routes REST API endpoints
+fastify.register(Routes, { prefix: 'api/v1' })
+
+// Register GraphQL with fastify with mercurius
+fastify.register(mercurius, {
+  schema: peopleSchema,
+  resolvers: peopleResolvers,
+  graphiql: true
 })
 
 const start = async () => {
@@ -32,6 +43,7 @@ const start = async () => {
     })
     fastify.log.info(`server listening on ${fastify.server.address().port}`)
   } catch (err) {
+    console.log('Fastify Error', err)
     fastify.log.error(err)
     process.exit(1)
   }

@@ -1,3 +1,7 @@
+import { buildSchema } from 'graphql'
+
+export const peopleSchema = buildSchema(`
+
 type Person {
   id: ID!
   name: String!
@@ -7,21 +11,18 @@ type Person {
   birthday: Date
   phone: String
   email: String!
-  contacts: [Person]
-  created: Date!
-  modified: Date!
 }
 
 enum Gender {
-  MALE
-  FEMALE
+  male
+  female
 }
 
 scalar Date
 
 type Query {
   getPerson(id: ID!): Person
-  getAllPeople(page: Int!, pageSize: Int!, sortBy: String): [Person]!
+  getAllPeople(limit: Int, page: Int, sortBy: String, sortOrder: String): [Person]!
 }
 
 type Mutation {
@@ -33,7 +34,6 @@ type Mutation {
     birthday: Date,
     phone: String,
     email: String!,
-    contacts: [ID]
   ): Person!
 
   updatePerson(
@@ -45,8 +45,7 @@ type Mutation {
     birthday: Date,
     phone: String,
     email: String,
-    contacts: [ID]
   ): Person!
 
-  deletePerson(id: ID!): Boolean!
-}
+  deletePerson(id: ID!): Person!
+}`)

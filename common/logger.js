@@ -126,7 +126,7 @@ const format = combine(
   customFormat
 )
 
-const logger = winston.createLogger({
+export const logger = winston.createLogger({
   transports,
   exitOnError: false,
   format
@@ -176,28 +176,28 @@ export default class Logger {
   static buildMessage (logAttrs) {
     const msg = [`${logAttrs.logTitle}`]
     if (logAttrs.klass) {
-      msg.push('Class:', logAttrs.klass.name, ',')
+      msg.push(` Class: ${logAttrs.klass.name}`)
     }
     if (logAttrs.message) {
-      msg.push('Message:', logAttrs.message, ',')
+      msg.push(` \n\nMessage: ${JSON.stringify(logAttrs.message, null, 2)}`)
     }
     if (logAttrs.context) {
-      msg.push('Context:', logAttrs.context, ',')
+      msg.push(` \n\nContext: ${JSON.stringify(logAttrs.context, null, 2)}`)
     }
     if (logAttrs.metadata) {
-      msg.push('Metadata:', logAttrs.metadata, ',')
+      msg.push(` \n\nMetadata: ${JSON.stringify(logAttrs.metadata, null, 2)}`)
     }
     if (logAttrs.tagCtx) {
-      msg.push('TagsCtx:', logAttrs.tagCtx, ',')
+      msg.push(` \n\nTagsCtx: ${JSON.stringify(logAttrs.tagCtx, null, 2)}`)
     }
     if (logAttrs.userCtx) {
-      msg.push('UserCtx:', logAttrs.userCtx, ',')
+      msg.push(` \n\nUserCtx: ${JSON.stringify(logAttrs.userCtx, null, 2)}`)
     }
     if (logAttrs.exception) {
-      msg.push('ExceptionBacktrace:', logAttrs.exception.stack, ',')
+      msg.push(` \n\nExceptionBacktrace: ${JSON.stringify(logAttrs.exception.stack, null, 2)}`)
     }
     if (logAttrs.fault) {
-      msg.push('Fault:', logAttrs.fault, ',')
+      msg.push(` \n\nFault: ${JSON.stringify(logAttrs.fault, null, 2)}`)
     }
     return msg
   }
