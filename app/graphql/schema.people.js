@@ -37,6 +37,7 @@ type Mutation {
     birthday: Date,
     phone: String,
     email: String!,
+    contacts: [ID]
   ): Person!
 
   updatePerson(

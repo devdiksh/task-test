@@ -60,8 +60,20 @@ export class UpdatePersonService extends ServiceBase {
 
       // Update person
       await person.update({
-        name, surname, age, gender, birthday, phone, email, contacts
+        name, surname, age, gender, birthday, phone, email
       })
+
+      // Find Valid Contact Ids
+      const validContactIds = (await Person.findAll({
+        where: { id: contacts },
+        attributes: ['id']
+      })).map(contact => contact.id)
+
+      // Update Contacts
+      await person.setContacts(validContactIds)
+
+      // Reload Updated Person with contacts
+      await person.reload({ include: [Person.associations.contacts] })
 
       return {
         data: person,

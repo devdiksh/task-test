@@ -33,6 +33,9 @@ export class GetOnePersonService extends ServiceBase {
         })
       }
 
+      const contacts = await person.getContacts()
+      console.log('CONTACT', contacts)
+
       return {
         data: person,
         message: MESSAGES.PERSON_FETCHED
