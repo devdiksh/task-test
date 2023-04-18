@@ -61,8 +61,6 @@ export class UpdatePersonService extends ServiceBase {
       // Update person
       await person.update({
         name, surname, age, gender, birthday, phone, email, contacts
-      }, {
-        include: [Person.associations.contacts]
       })
 
       return {

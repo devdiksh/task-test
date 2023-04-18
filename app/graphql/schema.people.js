@@ -11,6 +11,9 @@ type Person {
   birthday: Date
   phone: String
   email: String!
+  contacts: [Person]
+  created: Date
+  modified: Date
 }
 
 enum Gender {

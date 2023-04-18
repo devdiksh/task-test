@@ -59,8 +59,6 @@ export class CreatePersonService extends ServiceBase {
       // Create new person
       const person = await Person.create({
         name, surname, age, gender, birthday, phone, email, contacts
-      }, {
-        include: [Person.associations.contacts]
       })
 
       return {

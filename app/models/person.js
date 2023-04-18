@@ -25,13 +25,18 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     }
+  }, {
+    timestamps: true,
+    createdAt: 'created',
+    updatedAt: 'modified'
   })
 
   Person.associate = function (models) {
     Person.belongsToMany(models.Person, {
       as: 'contacts',
       through: 'PersonContacts',
-      foreignKey: 'personId'
+      foreignKey: 'personId',
+      otherKey: 'contactId'
     })
   }
 
