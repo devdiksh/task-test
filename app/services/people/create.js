@@ -29,6 +29,9 @@ const constraints = {
   },
   email: {
     presence: { allowEmpty: false }
+  },
+  contacts: {
+    presence: false
   }
 }
 
@@ -38,7 +41,7 @@ export class CreatePersonService extends ServiceBase {
   }
 
   async run () {
-    const { name, surname, age, gender, birthday, phone, email } = this.filteredArgs
+    const { name, surname, age, gender, birthday, phone, email, contacts } = this.filteredArgs
 
     try {
       const { Person } = db
@@ -55,7 +58,7 @@ export class CreatePersonService extends ServiceBase {
 
       // Create new person
       const person = await Person.create({
-        name, surname, age, gender, birthday, phone, email
+        name, surname, age, gender, birthday, phone, email, contacts
       }, {
         include: [Person.associations.contacts]
       })

@@ -20,7 +20,10 @@ export class GetOnePersonService extends ServiceBase {
     try {
       const { Person } = db
 
-      const person = await Person.findByPk(id)
+      const person = await Person.findOne({
+        where: { id },
+        include: [Person.associations.contacts]
+      })
 
       // Check if person exist
       if (!person) {
