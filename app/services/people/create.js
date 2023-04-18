@@ -12,20 +12,20 @@ const constraints = {
     presence: { allowEmpty: false }
   },
   age: {
-    presence: { allowEmpty: false }
+    presence: false
   },
   gender: {
-    presence: { allowEmpty: false },
+    presence: false,
     inclusion: {
       within: ['male', 'female'],
       message: '%{value} is not valid.'
     }
   },
   birthday: {
-    presence: { allowEmpty: false }
+    presence: false
   },
   phone: {
-    presence: { allowEmpty: false }
+    presence: false
   },
   email: {
     presence: { allowEmpty: false }
