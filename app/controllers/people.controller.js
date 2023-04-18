@@ -1,4 +1,4 @@
-import Responder from '../common/responder'
+import Responder from '../../common/responder'
 import {
   CreatePersonService, GetAllPeopleService,
   GetOnePersonService, UpdatePersonService

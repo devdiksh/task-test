@@ -4,11 +4,11 @@ import cors from '@fastify/cors'
 import pagination from 'fastify-pagination'
 import swagger from '@fastify/swagger'
 import config from './config/app'
-import db from './models/index'
+import db from './app/models/index'
 
-import { peopleSchema } from './graphql/schema.people'
-import { peopleResolvers } from './graphql/resolver.people'
-import { Routes } from './routes'
+import { peopleSchema } from './app/graphql/schema.people'
+import { peopleResolvers } from './app/graphql/resolver.people'
+import { Routes } from './app/routes'
 
 const fastify = Fastify({ logger: false })
 const PORT = config.get('port')

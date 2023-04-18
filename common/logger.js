@@ -1,6 +1,6 @@
 import winston from 'winston'
-import fs from 'fs'
 import config from '../config/app'
+import fs from 'fs'
 
 require('winston-daily-rotate-file')
 

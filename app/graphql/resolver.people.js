@@ -1,11 +1,7 @@
-import db from '../models'
 import {
   CreatePersonService, GetAllPeopleService,
-  GetOnePersonService, UpdatePersonService
+  GetOnePersonService, UpdatePersonService, DeleteOnePersonService
 } from '../services/people'
-import { DeleteOnePersonService } from '../services/people/delete'
-
-const { Person } = db
 
 export const peopleResolvers = {
   Query: {

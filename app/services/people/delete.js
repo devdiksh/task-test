@@ -1,7 +1,7 @@
-import ServiceBase from '../../common/serviceBase'
+import ServiceBase from '../../../common/serviceBase'
 import db from '../../models'
-import { ERRORS } from '../../utils/errors'
-import { MESSAGES } from '../../utils/messages'
+import { ERRORS } from '../../../utils/errors'
+import { MESSAGES } from '../../../utils/messages'
 
 const constraints = {
   id: {
@@ -9,7 +9,7 @@ const constraints = {
   }
 }
 
-export class GetOnePersonService extends ServiceBase {
+export class DeleteOnePersonService extends ServiceBase {
   get constraints () {
     return constraints
   }
@@ -30,9 +30,12 @@ export class GetOnePersonService extends ServiceBase {
         })
       }
 
+      // Delete Person
+      await person.destroy()
+
       return {
         data: person,
-        message: MESSAGES.PERSON_FETCHED
+        message: MESSAGES.PERSON_DELETED
       }
     } catch (error) {
       return this.addError(ERRORS.INTERNAL, {

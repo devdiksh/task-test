@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs'
 import path, { basename as _basename } from 'path'
 import { Sequelize } from 'sequelize'
-import dbconfig from '../config/db'
+import dbconfig from '../../config/db'
 
 const basename = _basename(__filename)
 const env = process.env.NODE_ENV || 'development'

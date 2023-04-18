@@ -1,7 +1,7 @@
-import ServiceBase from '../../common/serviceBase'
+import ServiceBase from '../../../common/serviceBase'
 import db from '../../models'
-import { ERRORS } from '../../utils/errors'
-import { MESSAGES } from '../../utils/messages'
+import { ERRORS } from '../../../utils/errors'
+import { MESSAGES } from '../../../utils/messages'
 
 const constraints = {
   id: {
