@@ -45,7 +45,6 @@ export class CreatePersonService extends ServiceBase {
 
     try {
       const { Person } = db
-
       const emailExist = await Person.findOne({ where: { email } })
 
       // Check if email exist
@@ -61,17 +60,19 @@ export class CreatePersonService extends ServiceBase {
         name, surname, age, gender, birthday, phone, email
       })
 
-      // Find Valid Contact Ids
-      const validContactIds = (await Person.findAll({
-        where: { id: contacts },
-        attributes: ['id']
-      })).map(contact => contact.id)
+      if (contacts && contacts.length > 0) {
+        // Find Valid Contact Ids
+        const validContactIds = (await Person.findAll({
+          where: { id: contacts },
+          attributes: ['id']
+        })).map(contact => contact.id)
 
-      // Create Contacts
-      await person.setContacts(validContactIds)
+        // Create Contacts
+        await person.setContacts(validContactIds)
 
-      // Reload Updated Person with contacts
-      await person.reload({ include: [Person.associations.contacts] })
+        // Reload Updated Person with contacts
+        await person.reload({ include: [Person.associations.contacts] })
+      }
 
       return {
         data: person,
